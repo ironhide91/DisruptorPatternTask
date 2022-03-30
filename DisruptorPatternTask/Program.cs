@@ -11,7 +11,8 @@
             var calculator = new DisruptorCalculator(
                 new SimulateBusyWorkHandler(2000),
                 arithmeticCommandEventHandler,
-                new ConsoleWorkHandler());
+                new ConsoleWorkHandler(),
+                new MetericWorkHandler());
 
             calculator.Initialize(ringBufferSize: 1024);
 

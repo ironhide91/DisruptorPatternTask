@@ -8,10 +8,6 @@ namespace DisruptorPatternTask
         private readonly Dictionary<string, IArithmeticCommandProcessor> processors =
             new Dictionary<string, IArithmeticCommandProcessor>();
 
-        private readonly string CodeUnkownCommand = "OperationNotFound";
-        private readonly string CodeSuccess = "Success";
-        private readonly string CodeError = "Error";
-
         public ArithmeticCommandEventHandler()
         {
 
@@ -36,7 +32,7 @@ namespace DisruptorPatternTask
             if (!TryParse(evt))
             {
                 timer.Stop();
-                evt.Code = CodeError;
+                evt.Code = StatusCode.Error;
                 evt.ExecutionDuration = timer.ElapsedMilliseconds;
                 return;
             }
@@ -44,14 +40,14 @@ namespace DisruptorPatternTask
             if (!CanExecute(evt))
             {                
                 timer.Stop();                
-                evt.Code = CodeUnkownCommand;
+                evt.Code = StatusCode.UnkownCommand;
                 evt.ExecutionDuration = timer.ElapsedMilliseconds;
                 return;
             }
 
             Execute(evt);            
             timer.Stop();            
-            evt.Code = CodeSuccess;
+            evt.Code = StatusCode.Success;
             evt.ExecutionDuration = timer.ElapsedMilliseconds;
         }                
 
